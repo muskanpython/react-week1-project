@@ -1,5 +1,6 @@
 
 const js = require('@eslint/js');
+const globals = require('globals');
 
 module.exports = [
   {
@@ -12,9 +13,8 @@ module.exports = [
       ecmaVersion: 'latest',
       sourceType: 'module',
       globals: {
-        window: 'readonly',
-        document: 'readonly',
-        console: 'readonly',
+        ...globals.browser,
+        ...globals.node,
       },
       parserOptions: {
         ecmaFeatures: {

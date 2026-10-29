@@ -11,20 +11,22 @@ module.exports = {
     clean: true,
   },
 
-  
-module: {
-  rules: [
-    {
-      test: /\.(js|jsx)$/,
-      exclude: /node_modules/,
-      use: 'babel-loader',
-    },
-    {
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader'],
-    },
-  ],
-},
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        type: 'javascript/auto',
+        use: {
+          loader: 'babel-loader',
+        },
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
+      },
+    ],
+  },
 
   resolve: {
     extensions: ['.js', '.jsx'],
