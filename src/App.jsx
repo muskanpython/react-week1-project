@@ -1,72 +1,67 @@
 
-import { useMemo, useState } from 'react';
-import { TaskProvider, useTaskContext } from './context/TaskContext';
-import TaskForm from './components/tasks/TaskForm';
-import TaskList from './components/tasks/TaskList';
-import TaskFilters from './components/tasks/TaskFilters';
+import { useState } from 'react';
+import useShows from './hooks/useShows';
+import SearchBar from './components/shows/SearchBar';
+import ShowList from './components/shows/ShowList';
 import './styles/main.css';
 import './styles/components.css';
 
-function TaskDashboard() {
-  const [filter, setFilter] = useState('all');
-  const [search, setSearch] = useState('');
-  const { tasks } = useTaskContext();
-
-  const filteredTasks = useMemo(() => {
-    return tasks.filter((task) => {
-      const matchesFilter =
-        filter === 'all' ||
-        (filter === 'active' && !task.completed) ||
-        (filter === 'completed' && task.completed);
-
-      const matchesSearch = task.title
-        .toLowerCase()
-        .includes(search.trim().toLowerCase());
-
-      return matchesFilter && matchesSearch;
-    });
-  }, [tasks, filter, search]);
+function App() {
+  const [query, setQuery] = useState('friends');
+  const { shows, loading, error, retry } = useShows(query);
 
   return (
-    <main className="task-app">
-      <header className="task-header">
-        <p className="task-eyebrow">WEEK 3 • REACT INTERNSHIP PROJECT</p>
-        <h1>My Task Manager</h1>
-        <p className="task-subtitle">
-          Organize your work, track progress, and get things done.
+    <main className="tv-app">
+      <header className="tv-header">
+        <p className="tv-eyebrow">DISCOVER YOUR NEXT FAVORITE</p>
+        <h1>TV Show Explorer</h1>
+        <p className="tv-subtitle">
+          Explore television shows from around the world.
         </p>
       </header>
 
-      <section className="task-panel">
-        <TaskForm />
+      <section className="tv-content">
+        <SearchBar query={query} onSearch={setQuery} />
 
-        <TaskFilters filter={filter} setFilter={setFilter} />
+        {loading && (
+          <div className="tv-status" role="status">
+            <div className="tv-spinner"></div>
+            <p>Finding amazing shows...</p>
+          </div>
+        )}
 
-        <div className="task-search">
-          <label htmlFor="task-search-input">Search tasks</label>
-          <input
-            id="task-search-input"
-            type="search"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder="Type to find a task..."
-          />
-        </div>
+        {!loading && error && (
+          <div className="tv-error" role="alert">
+            <h2>Unable to load shows</h2>
+            <p>{error}</p>
+            <button type="button" onClick={retry}>
+              Try Again
+            </button>
+          </div>
+        )}
 
-        <TaskList tasks={filteredTasks} />
+        {!loading && !error && query.trim() && shows.length === 0 && (
+          <div className="tv-empty">
+            <h2>No shows found</h2>
+            <p>Try another title or search term.</p>
+          </div>
+        )}
+
+        {!loading && !error && !query.trim() && (
+          <div className="tv-empty">
+            <h2>Start exploring</h2>
+            <p>Enter a TV show name to discover results.</p>
+          </div>
+        )}
+
+        {!loading && !error && <ShowList shows={shows} />}
       </section>
 
-      <footer className="task-footer">
-        Built with React Hooks, Context API, and localStorage.
+      <footer className="tv-footer">
+        Powered by the TVMaze public API · Built with React
       </footer>
     </main>
   );
 }
 
-export default function App() {
-  return (
-    <TaskProvider>
-      <TaskDashboard />
-    </TaskProvider>
-  );
-}
+export default App;

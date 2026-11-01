@@ -467,3 +467,201 @@
     width: 100%;
   }
 }
+
+/* Week 4 - TV Show Explorer */
+
+.tv-app {
+  min-height: 100vh;
+  padding: 55px 7%;
+  background: #10131f;
+  color: #f4f5fb;
+  font-family: Arial, sans-serif;
+}
+
+.tv-header {
+  text-align: center;
+  margin: 10px auto 42px;
+}
+
+.tv-eyebrow {
+  color: #a78bfa;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.tv-header h1 {
+  margin: 12px 0;
+  font-size: clamp(34px, 5vw, 54px);
+  color: #ffffff;
+}
+
+.tv-subtitle {
+  color: #aeb4c8;
+  font-size: 16px;
+}
+
+.tv-content {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.search-container {
+  max-width: 650px;
+  margin: 0 auto 38px;
+}
+
+.search-container label {
+  display: block;
+  margin-bottom: 10px;
+  color: #d7d9e5;
+  font-weight: 600;
+}
+
+.search-container input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 18px;
+  border: 1px solid #353b52;
+  border-radius: 12px;
+  background: #1c2233;
+  color: #ffffff;
+  font-size: 15px;
+  outline: none;
+}
+
+.search-container input:focus {
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.15);
+}
+
+.show-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.show-card {
+  overflow: hidden;
+  background: #1b2131;
+  border: 1px solid #30374b;
+  border-radius: 15px;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.show-card:hover {
+  transform: translateY(-5px);
+  border-color: #a78bfa;
+}
+
+.show-card img {
+  display: block;
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  background: #252c40;
+}
+
+.poster-placeholder {
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #252c40;
+  color: #aeb4c8;
+}
+
+.show-card-content {
+  padding: 17px;
+}
+
+.show-card-content h2 {
+  margin: 0 0 9px;
+  font-size: 19px;
+  color: #ffffff;
+}
+
+.show-meta,
+.show-genres {
+  color: #b5a1ff;
+  font-size: 13px;
+}
+
+.show-summary {
+  color: #b8bfd0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.tv-status,
+.tv-empty,
+.tv-error {
+  padding: 45px 20px;
+  text-align: center;
+  color: #c3c8d8;
+}
+
+.tv-error h2,
+.tv-empty h2 {
+  color: #ffffff;
+}
+
+.tv-error button {
+  padding: 11px 22px;
+  border: none;
+  border-radius: 8px;
+  background: #8b70e8;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.tv-spinner {
+  width: 38px;
+  height: 38px;
+  margin: 0 auto 15px;
+  border: 4px solid #343b50;
+  border-top-color: #a78bfa;
+  border-radius: 50%;
+  animation: tv-spin 0.8s linear infinite;
+}
+
+@keyframes tv-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tv-footer {
+  margin-top: 55px;
+  text-align: center;
+  color: #828ba3;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .tv-app {
+    padding: 35px 5%;
+  }
+
+  .show-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+  }
+
+  .show-card img,
+  .poster-placeholder {
+    height: 210px;
+  }
+
+  .show-card-content {
+    padding: 12px;
+  }
+
+  .show-card-content h2 {
+    font-size: 16px;
+  }
+
+  .show-summary {
+    font-size: 12px;
+  }
+}
